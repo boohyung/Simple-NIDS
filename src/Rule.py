@@ -14,10 +14,10 @@ class Rule:
     def __init__(self, str):
         """Construct a rule from a string."""
 
-        self.string = str
+        self.string = str   # 문자열로 받기
 
-        str = str.strip()
-        strs = str.split(' ')
+        str = str.strip()   # 양쪽 공백 지우기
+        strs = str.split(' ')   # '을 기준으로 문자열 나누기
 
         if (len(strs) >= 7):
 
