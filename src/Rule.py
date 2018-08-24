@@ -17,18 +17,18 @@ class Rule:
         self.string = str   # 문자열로 받기
 
         str = str.strip()   # 양쪽 공백 지우기
-        strs = str.split(' ')   # '을 기준으로 문자열 나누기
+        strs = str.split(' ')   # 헤더: space를 기준으로 문자열 나누기
 
-        if (len(strs) >= 7):
+        if (len(strs) >= 7):        # 나눈 문자열의 길이가 7 이상이라면
 
-            self.action = action(strs[0])
+            self.action = action(strs[0])   # 0번 인덱스: action
 
             # protocol
-            self.protocol = protocol(strs[1])
+            self.protocol = protocol(strs[1])   # 1번 인덱스: protocol
 
             # source ip and ports
             try:
-                self.srcIps = IPNetwork(strs[2])
+                self.srcIps = IPNetwork(strs[2])    # 2, 3번 인덱스에는 Source IP, Port
             except:
                 raise ValueError("Invalid rule : incorrect source ips : '" + strs[2] + "'.")
             try:
@@ -38,7 +38,7 @@ class Rule:
 
             # destination ip and ports
             try:
-                self.dstIps = IPNetwork(strs[5])
+                self.dstIps = IPNetwork(strs[5])    # 5, 6번 인덱스는 Dst IP, Port
             except:
                 raise ValueError("Invalid rule : incorrect destination ips : '" + strs[5] + "'.")
 
@@ -48,7 +48,7 @@ class Rule:
                 raise ValueError("Invalid rule : incorrect destination ports : '" + strs[6] + "'.")
 
             # Options
-            strs = str.split('(')
+            strs = str.split('(')   # Option: (을 기준으로 문자열 나누기
             if (len(strs) >= 2):
                 # remove trailing ')' if present
                 if (strs[-1][-1] == ')'):
@@ -101,7 +101,7 @@ class Rule:
         # simply use initialization string
         return self.string
 
-    def match(self, pkt):
+    def match(self, pkt):   # 인바운드 패킷 데이터와 룰 
         """
         Returns True if and only if the rule is matched by given packet,
         i.e. if every part of the rule is met by the packet.
